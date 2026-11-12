@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Код Даласы</title>
+<meta name="description" content="Код Даласы — 7–8 сыныпқа арналған «Алгоритм» бөлімі бойынша Python тіліндегі білім беру ойыны.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Golos+Text:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<style>[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<header class="top">
+  <button class="brand" id="homeBtn" type="button" data-i18n-aria="top.home" aria-label="Картаға оралу">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M4.5 12.5Q16 7 27.5 12.5M4.5 19.5Q16 25 27.5 19.5M12.5 4.5Q7 16 12.5 27.5M19.5 4.5Q25 16 19.5 27.5" fill="none" stroke="currentColor" stroke-width="1.9"/></svg>
+    <span>Код Даласы</span>
+  </button>
+  <div class="top-r">
+    <select class="lang-sel" id="langSel" data-i18n-aria="app.lang" aria-label="Тіл"><option value="kk">ҚАЗ</option><option value="ru">РУС</option><option value="en">ENG</option></select>
+    <button class="user-chip" id="userBtn" type="button" hidden></button>
+    <button class="btn small ghost" id="musicBtn" type="button" aria-pressed="true"></button>
+    <button class="btn small ghost" id="soundBtn" type="button" aria-pressed="true"></button>
+    <button class="btn small ghost" id="teacherBtn" type="button" data-i18n-aria="top.teacher" aria-label="Мұғалімге"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1.5 6L8 3l6.5 3L8 9zM4 7.3v3.4C5.6 12.2 10.4 12.2 12 10.7V7.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span class="bl" data-i18n="top.teacher">Мұғалімге</span></button>
+    <div class="total" id="total"></div>
+  </div>
+</header>
+<div class="ornament" aria-hidden="true">
+  <svg preserveAspectRatio="none"><defs><pattern id="horn" width="56" height="18" patternUnits="userSpaceOnUse">
+    <path d="M28 9C21 9 18 3 12.5 4.5C8.5 5.6 8.6 11.5 12.6 11.6C15 11.7 15.4 8.6 13.6 8M28 9C35 9 38 3 43.5 4.5C47.5 5.6 47.4 11.5 43.4 11.6C41 11.7 40.6 8.6 42.4 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M28 5.5L31.5 9L28 12.5L24.5 9Z" fill="currentColor"/><path d="M0 9h3M53 9h3" stroke="currentColor" stroke-width="1.6"/>
+  </pattern></defs><rect width="100%" height="18" fill="url(#horn)"/></svg>
+</div>
+
+<main>
+  <section id="authScreen" hidden>
+    <div class="auth">
+      <div class="auth-intro">
+        <p class="eyebrow" data-i18n="a.eyebrow">Код Даласы · тіркелу</p>
+        <h1 data-i18n="a.title">Кім ойнайды?</h1>
+        <p class="lede" data-i18n="a.lede">Атыңды таңда немесе жаңадан тіркел. Әр оқушының жұлдыздары мен жазған коды бөлек сақталады, сондықтан бір компьютерде бірнеше оқушы ойнай алады.</p>
+        <ul class="auth-points" data-i18n-html="a.points"></ul>
+      </div>
+      <div class="auth-card">
+        <div class="tabs" role="tablist">
+          <button class="tab" role="tab" id="tabLogin" aria-selected="true" aria-controls="authLogin" type="button" data-i18n="a.login">Кіру</button>
+          <button class="tab" role="tab" id="tabReg" aria-selected="false" aria-controls="authReg" type="button" data-i18n="a.register">Тіркелу</button>
+        </div>
+        <div class="auth-body" id="authLogin" role="tabpanel" aria-labelledby="tabLogin">
+          <div id="pickBox">
+            <div class="field" id="searchWrap" hidden style="margin-bottom:12px"><label for="userSearch" data-i18n="a.search">Атыңды ізде</label><input class="inp" id="userSearch" type="search" autocomplete="off"></div>
+            <div class="user-grid" id="userGrid"></div>
+          </div>
+          <form class="pin-box" id="pinBox" hidden novalidate>
+            <span class="ava big" id="pinAva"></span>
+            <p style="margin:0" id="pinHello" data-i18n-html="a.hello"></p>
+            <input class="inp pin" id="pinInput" type="password" inputmode="numeric" autocomplete="off" maxlength="4" data-i18n-aria="a.pin" aria-label="PIN код">
+            <p class="form-err" id="pinErr" role="alert"></p>
+            <div class="form-actions"><button class="btn ghost" id="pinBack" type="button" data-i18n="a.back">Артқа</button><button class="btn primary" type="submit" data-i18n="a.enter">Кіру</button></div>
+          </form>
+        </div>
+        <form class="auth-body" id="authReg" role="tabpanel" aria-labelledby="tabReg" hidden novalidate>
+          <div class="form-grid">
+            <div class="field"><label for="regName" data-i18n="a.name">Аты</label><input class="inp" id="regName" autocomplete="off" maxlength="30"></div>
+            <div class="field"><label for="regSurname" data-i18n="a.surname">Тегі</label><input class="inp" id="regSurname" autocomplete="off" maxlength="30"></div>
+            <div class="field"><label for="regGrade" data-i18n="a.grade">Сынып</label><select class="inp" id="regGrade"><option value="5">5</option><option value="6">6</option><option value="7" selected>7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option></select></div>
+            <div class="field"><label for="regLetter" data-i18n="a.letter">Әрпі</label><select class="inp" id="regLetter"><option>А</option><option>Ә</option><option>Б</option><option>В</option><option>Г</option><option>Д</option><option>Е</option></select></div>
+            <div class="field"><label for="regPin" data-i18n="a.pin1">PIN код (4 сан)</label><input class="inp pin" id="regPin" type="password" inputmode="numeric" maxlength="4" autocomplete="off"></div>
+            <div class="field"><label for="regPin2" data-i18n="a.pin2">PIN кодты қайтала</label><input class="inp pin" id="regPin2" type="password" inputmode="numeric" maxlength="4" autocomplete="off"></div>
+            <div class="field wide"><span class="lbl" id="swLbl" data-i18n="a.color">Белгіңнің түсі</span><div class="swatches" id="swatches" role="radiogroup" aria-labelledby="swLbl"></div></div>
+          </div>
+          <p class="form-err" id="regErr" role="alert" style="margin-top:12px"></p>
+          <div class="form-actions"><button class="btn primary" type="submit" data-i18n="a.submit">Тіркелу және ойнау</button></div>
+        </form>
+        <button class="guest" id="guestBtn" type="button" data-i18n="a.guest">Тіркелмей, қонақ ретінде ойнау</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="mapScreen" hidden>
+    <div class="map-head">
+      <p class="eyebrow" data-i18n="map.eyebrow">Информатика · «Алгоритм» бөлімі · Python</p>
+      <h1 data-i18n="map.title">Алгоритм жолы</h1>
+      <p class="lede" data-i18n="map.lede">Ұлы Даланың алтын тамғалары шашылып, қақпалары жабылып қалды. Батыр — орындаушы, ал сен оған алгоритм жазасың. Сызықтық алгоритмнен бастап, тармақталу мен циклге дейін жетесің. Әр кодыңның блок-схемасы бірден сызылады.</p>
+    </div>
+    <div class="map-grid">
+      <div class="map-board" id="mapBoard">
+        <svg id="mapArt" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+        <div id="mapNodes"></div>
+      </div>
+      <ol class="level-list" id="levelList"></ol>
+      <aside class="side" id="side"></aside>
+    </div>
+  </section>
+
+  <section id="levelScreen" hidden>
+    <div class="lvl-bar">
+      <button class="btn small ghost" id="backBtn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="lvl.map">Карта</span></button>
+      <span class="count" id="lvlCount"></span>
+      <h2 id="lvlTitle"></h2>
+      <span class="chip" id="lvlChip"></span>
+      <span class="chip sky" id="lvlCode" hidden></span>
+      <span class="spacer"></span>
+      <span class="lvl-stars" id="lvlStars" data-i18n-aria="lvl.stars" aria-label="Жұлдыздар"></span>
+    </div>
+    <div class="lvl-grid">
+      <div>
+        <div class="variants" id="variants" hidden></div>
+        <div class="stage" id="stage"><canvas id="world" data-i18n-aria="lvl.world" aria-label="Ойын әлемі"></canvas></div>
+        <div class="mentor" id="mentor">
+          <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="27" fill="#2b3766"/><path d="M12 50C10 30 18 14 34 13C42 12.5 47 17 47 22C47 25 45 27 42 27C40 34 33 40 26 50Z" fill="#8a5a2f"/><path d="M41.5 17.5C48 17.5 52.5 21 51 27C49 24.5 46 23.6 42.5 24.2Z" fill="#f0b23e"/><path d="M15 46C19 36 25 30 33 28" stroke="#c99a62" stroke-width="2" fill="none"/><circle cx="38" cy="19" r="2.3" fill="#121a33"/><path d="M33 15.8C36 14.4 40 14.7 42.3 16.2" stroke="#e8dcc0" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>
+          <div class="body">
+            <div class="who"><b data-i18n="lvl.mentor">Қыран</b><span class="who-btns"><button class="btn small ghost" id="hintBtn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5a4.5 4.5 0 0 0-2.6 8.2V12h5.2V9.7A4.5 4.5 0 0 0 8 1.5zM6 14h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span data-i18n="lvl.hint">Кеңес</span></button></span></div>
+            <button class="btn small ai-ask" id="aiAskBtn" type="button" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l1.4 3.6 3.6 1.4-3.6 1.4L8 11.5 6.6 7.9 3 6.5l3.6-1.4zM12.5 10.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" fill="currentColor"/></svg><span data-i18n="ai.ask">Қыраннан сұра</span></button>
+            <p id="mentorText"></p>
+            <div class="rule" id="ruleBox" hidden></div>
+          </div>
+        </div>
+        <div class="goals">
+          <h3 data-i18n="lvl.goals">Мақсаттар</h3>
+          <ul class="goal-list" id="goalList"></ul>
+        </div>
+      </div>
+      <div>
+        <div class="editor-card">
+          <div class="editor-head">
+            <div class="l"><span class="file">main.py</span><span class="chip sky" id="algoType"></span></div>
+            <button class="btn small ghost" id="refBtn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3h4a1.5 1.5 0 0 1 1.5 1.5V13a1.5 1.5 0 0 0-1.5-1.5h-4zM13.5 3h-4A1.5 1.5 0 0 0 8 4.5V13a1.5 1.5 0 0 1 1.5-1.5h4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span data-i18n="ed.ref">Анықтама</span></button>
+          </div>
+          <div class="editor">
+            <div class="gutter" aria-hidden="true"><div class="gin" id="gutter"></div></div>
+            <div class="code-wrap" id="codeWrap">
+              <div class="lineband active" id="bandActive" hidden></div>
+              <div class="lineband err" id="bandErr" hidden></div>
+              <pre aria-hidden="true" id="hlPre"><code id="hl"></code></pre>
+              <textarea id="code" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" data-i18n-aria="ed.code" aria-label="Python коды"></textarea>
+            </div>
+          </div>
+          <div class="palette" id="palette"></div>
+          <div class="vars" id="vars" hidden></div>
+          <div class="controls">
+            <button class="btn primary run" id="runBtn" type="button"></button>
+            <button class="btn small" id="speedBtn" type="button">Жылдамдық 1×</button>
+            <span class="spacer"></span>
+            <button class="btn small ghost" id="resetBtn" type="button" data-i18n="ed.reset">Бастапқы код</button>
+          </div>
+        </div>
+        <div class="out-card">
+          <div class="tabs" role="tablist">
+            <button class="tab" role="tab" id="tabFlow" aria-selected="true" aria-controls="panelFlow" type="button" data-i18n="tab.flow">Блок-схема</button>
+            <button class="tab" role="tab" id="tabLog" aria-selected="false" aria-controls="panelLog" type="button"><span data-i18n="tab.log">Хабарлар</span> <span class="badge" id="logBadge">0</span></button>
+            <button class="tab ai-tab" role="tab" id="tabAi" aria-selected="false" aria-controls="panelAi" type="button" hidden><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l1.4 3.6 3.6 1.4-3.6 1.4L8 11.5 6.6 7.9 3 6.5l3.6-1.4zM12.5 10.5l.6 1.4 1.4.6-1.4.6-.6 1.4-.6-1.4-1.4-.6 1.4-.6z" fill="currentColor"/></svg><span data-i18n="ai.tab">Қыран ЖИ</span></button>
+          </div>
+          <div class="tab-panel" id="panelFlow" role="tabpanel" aria-labelledby="tabFlow">
+            <p class="fc-note" id="fcNote" hidden></p>
+            <div class="fc-wrap" id="fcWrap"></div>
+            <div class="legend">
+              <span><svg viewBox="0 0 26 16"><rect x="1" y="2" width="24" height="12" rx="6" fill="var(--panel-2)" stroke="var(--fc-stroke)"/></svg><span data-i18n="lg.term">басы / соңы</span></span>
+              <span><svg viewBox="0 0 26 16"><rect x="1" y="2" width="24" height="12" rx="1.5" fill="var(--fc-fill)" stroke="var(--fc-stroke)"/></svg><span data-i18n="lg.proc">әрекет</span></span>
+              <span><svg viewBox="0 0 26 16"><polygon points="5,2 25,2 21,14 1,14" fill="var(--fc-fill)" stroke="var(--jade)"/></svg><span data-i18n="lg.io">енгізу / шығару</span></span>
+              <span><svg viewBox="0 0 26 16"><polygon points="13,1 25,8 13,15 1,8" fill="var(--fc-fill)" stroke="var(--sky)"/></svg><span data-i18n="lg.dec">шарт</span></span>
+              <span><svg viewBox="0 0 26 16"><polygon points="1,8 5,2 21,2 25,8 21,14 5,14" fill="var(--fc-fill)" stroke="#c9a8ff"/></svg><span data-i18n="lg.loop">цикл (for)</span></span>
+            </div>
+          </div>
+          <div class="tab-panel" id="panelLog" role="tabpanel" aria-labelledby="tabLog" hidden>
+            <div class="console-box" id="consoleBox" role="status" aria-live="polite"></div>
+          </div>
+          <div class="tab-panel" id="panelAi" role="tabpanel" aria-labelledby="tabAi" hidden>
+            <p class="ai-state" id="aiState" hidden></p>
+            <div class="ai-chips" id="aiChips"></div>
+            <div class="ai-log" id="aiLog" aria-live="polite"></div>
+            <form class="ai-form" id="aiForm" novalidate>
+              <textarea class="inp" id="aiInput" rows="2" maxlength="500" data-i18n-ph="ai.placeholder" data-i18n-aria="ai.placeholder"></textarea>
+              <button class="btn primary" id="aiSend" type="submit" data-i18n="ai.send">Сұрау</button>
+              <button class="btn" id="aiStop" type="button" hidden data-i18n="ai.stop">Тоқтат</button>
+            </form>
+            <p class="ai-note" id="aiNote" data-i18n="ai.note"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="winModal" hidden role="dialog" aria-modal="true" aria-labelledby="winTitle">
+  <div class="modal-card">
+    <p class="eyebrow" id="winEyebrow"></p>
+    <h2 id="winTitle">Жарайсың, батыр!</h2>
+    <div class="star-row" id="winStars"></div>
+    <div class="quiz">
+      <p class="eyebrow" data-i18n="win.check">Тұжырымды тексер</p>
+      <p class="q" id="quizQ"></p>
+      <div id="quizOpts"></div>
+      <p class="explain" id="quizExplain" hidden></p>
+    </div>
+    <div class="modal-actions">
+      <button class="btn ghost" id="stayBtn" type="button" data-i18n="win.stay">Деңгейде қалу</button>
+      <button class="btn" id="toMapBtn" type="button" data-i18n="win.toMap">Картаға</button>
+      <button class="btn primary" id="nextBtn" type="button">Келесі деңгей</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="refModal" hidden role="dialog" aria-modal="true" aria-labelledby="refTitle">
+  <div class="modal-card">
+    <div class="ref-head"><h2 id="refTitle" data-i18n="ref.title">Анықтама</h2><button class="btn small" id="refClose" type="button" data-i18n="close">Жабу</button></div>
+    <div id="refBody"></div>
+  </div>
+</div>
+
+<div class="modal" id="teachModal" hidden role="dialog" aria-modal="true" aria-labelledby="teachTitle">
+  <div class="modal-card wide">
+    <div class="ref-head"><h2 id="teachTitle" data-i18n="t.title">Мұғалімге</h2><button class="btn small" id="teachClose" type="button" data-i18n="close">Жабу</button></div>
+    <div class="t-tools">
+      <p data-i18n="t.intro">Деңгейлер «Алгоритм» тақырыбы бойынша үш тарауға бөлінген. 2 және 3-тараулардағы кодтарда тиісті оқу мақсатының коды көрсетілген. Сабақта интерактивті тақтада көрсету үшін барлық деңгейді бірден ашуға болады.</p>
+      <span class="t-btns"><button class="btn small" id="unlockBtn" type="button"></button><button class="btn small" id="aiToggleBtn" type="button" hidden></button></span>
+    </div>
+    <div class="t-wrap"><table class="t-table" id="teachTable"></table></div>
+    <h3 class="t-h" data-i18n="t.students">Оқушылар · осы компьютер</h3>
+    <div class="t-tools2">
+      <label for="clsFilter" class="sr" style="font-size:13px;color:var(--muted)" data-i18n="t.class">Сынып:</label>
+      <select class="inp" id="clsFilter"></select>
+      <button class="btn small" id="csvBtn" type="button"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v8M4.5 6.5L8 10l3.5-3.5M2.5 13.5h11" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg><span data-i18n="t.csv">Excel-ге жүктеу (CSV)</span></button>
+      <span class="t-note" id="csvNote" style="margin:0"></span>
+    </div>
+    <div class="t-wrap" id="stuWrap"><table class="t-table" id="stuTable"></table></div>
+    <p class="empty-note" id="stuEmpty" hidden data-i18n="t.none">Бұл компьютерде әлі ешбір оқушы тіркелмеген.</p>
+    <ul class="t-tips" data-i18n-html="t.tips"></ul>
+  </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/flowchart.js"></script>
+<script src="js/sound.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
